@@ -100,7 +100,7 @@ void draw() {
     translate(width/2, height/2);
     //println(frameRate);
     fill(255);
-    stroke(255, 255, 255, 180);
+    stroke(255, 255, 255, 120);
     strokeWeight(2);
 
     /*
