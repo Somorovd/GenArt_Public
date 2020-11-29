@@ -1,3 +1,6 @@
+// STICK THESE IN THE setup() FUNCTION
+// AND REPLACE WHATS CURRENTLY THERE
+
 //=================================================
   //SCL = 150;
   //BASETEETH = 150;
