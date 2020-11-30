@@ -13,7 +13,7 @@
 
   //fulcrumGear = new FreeGear()
   //  .setCenterX(-1.2, 0.3, 7, 0)
-  //  .setCenterY(0, 1.5, 1, 0)
+  //  .setCenterY(0.8, 0.7, 2, 0)
   //  // fulcrum dist is set to 0, so teeth doesnt matter
   //  // just keep it > 0
   //  .setTeeth(1) 
@@ -25,7 +25,7 @@
   //  .setTeeth(100)
   //  .setDir(-1)
   //  .addGear()
-  //  .setTeethRatio(34, 60)
+  //  .setTeethRatio(36, 90)
   //  .setDistance(0.9)
   //  .addGear()
   //  .setTeethRatio(72, 40)
@@ -35,7 +35,7 @@
   //PIVOT = new Pin(pivotGear, 0.5);
   //FULCRUM = new Pin(fulcrumGear, 0);
   //PENDIST = new OSC(1.5, 0, 0, 0);
-  //PENOFF = new OSC(0.6, 1, 2, PI/2);
+  //PENOFF = new OSC(0.4, 0.6, 3, PI/2);
 ////=================================================
 //BASETEETH = 120;
 //BASE = new FreeGear()
