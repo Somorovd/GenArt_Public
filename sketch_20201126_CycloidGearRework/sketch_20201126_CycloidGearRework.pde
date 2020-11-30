@@ -50,6 +50,10 @@ boolean pause = false;
 void setup() {
   size(700, 700);
 
+  // Some good gear values:
+  // base teeth options; 120, 144, 150
+  // gear teeth options: 30, 32, 34, 36, 40, 48, 50, 58, 60, 66, 72, 74, 80, 90, 94, 98, 100
+
   //
 
   SCL = 220;
@@ -98,7 +102,7 @@ void keyPressed() {
 void draw() {
   if (!pause) {
     translate(width/2, height/2);
-    //println(frameRate);
+    println(frameRate);
     fill(255);
     stroke(255, 255, 255, 120);
     strokeWeight(2);
@@ -116,7 +120,7 @@ void draw() {
      Can also adjust speed and smoothness by messing with VEL and da_t above
      */
 
-    int num_steps = 5000;
+    int num_steps = 9400;
 
     if (mode == 0) {
       background(0);
