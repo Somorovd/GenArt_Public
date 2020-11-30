@@ -22,7 +22,7 @@ int BASETEETH;
 
 // Angular velocity of BASE gear
 // Scales angular velocity of other gears
-float VEL = PI/2;
+float VEL = PI;
 
 // current "angle time" and time increment
 // time used in turning the gears but not changing any positions
@@ -53,7 +53,7 @@ void setup() {
 
   //
 
-SCL = 220;
+  SCL = 220;
   BASETEETH = 150;
   BASE = new FreeGear()
     .setCenterX(0, 0, 0, 0)
@@ -106,7 +106,7 @@ void draw() {
     strokeWeight(2);
 
     /*
-  if you want to watch the images be drawn slowly as if it was a real pen
+     If you want to watch the images be drawn slowly as if it was a real pen
      comment out from the (mode==0) loop the following:
      
      background(0);
@@ -118,7 +118,15 @@ void draw() {
      Can also adjust speed and smoothness by messing with VEL and da_t above
      */
 
-    int num_steps = 5000;
+    /*
+     For smoother curves:
+     Reduce VEL (PI/2, PI/3, ...) or
+     Reduce da_t
+     You will need to increase num_steps to compensate, which 
+     will reduce performance.
+     */
+
+    int num_steps = 4800;
 
     if (mode == 0) {
       background(0);
@@ -148,15 +156,19 @@ void draw() {
 
         a_t += da_t;
       }
+
       a_t = 0;
-
-      // Uncomment to save frames for a gif
-      //if (pos_t < FRAMES) {
-      //  saveFrame("/Frames/frame_###.tif");
-      //}
-
       pos_t++;
     } else if (mode == 1) {  // GEAR VIEW MODE
+      /*
+      gear view helps to visualize the setup and keep the 
+       pen in frame, but is not exactly what is happening
+       for the drawing. Here, the gears move and rotate at 
+       the same time, while normally the gears only move
+       between frames.
+       */
+
+
       background(0);
       PVector pivot_pos = PIVOT.getPosition(a_t, pos_t);
       PVector fulcrum_pos = FULCRUM.getPosition(a_t, pos_t);
