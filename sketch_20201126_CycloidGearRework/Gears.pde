@@ -16,12 +16,14 @@ class AttachedGear extends Gear {
    
    In the physical world, there would be a second gear
    concentric with the parent gear that is fixed 
-   that the AttachedGear rotates about. 
-   Go to 4:45 in the video linked in main tab for an example.
-   See the top right gear.
+   that the AttachedGear rotates about (go to 4:45 in 
+   the video linked in main tab for an example.
+   See the top right gear). That type of setup is 
+   mimicked with setToothRatio(), which just keeps all 
+   gears coordinated.
    
-   That type of setup is mimicked with setToothRatio()
-   but all gears can be spun independently by using setVel()
+   Alternatively, all gears can be spun independently 
+   by using setVel()
    */
 
 

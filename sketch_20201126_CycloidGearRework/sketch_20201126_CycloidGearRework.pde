@@ -4,9 +4,6 @@
  
  This project is based on that mechanism, except some physical
  constraints have been ignored.  
- 
- And here is a video about gear ratios:
- https://www.youtube.com/watch?v=B1AJsUiJuQQ
  */
 
 
@@ -17,7 +14,7 @@ Pin PIVOT, FULCRUM;
 OSC PENDIST, PENOFF;
 
 // scale factor
-float SCL = 120;    
+float SCL = 100;    
 
 // teeth on BASE gear
 // Used to properly scale gear size and angular velocity
@@ -56,7 +53,7 @@ void setup() {
 
   //
 
-  SCL = 220;
+SCL = 220;
   BASETEETH = 150;
   BASE = new FreeGear()
     .setCenterX(0, 0, 0, 0)
@@ -84,6 +81,7 @@ void setup() {
   PENDIST = new OSC(1.5, 0.5, 1, 0);
   PENOFF = new OSC(0.6, 0.5, 2, 0);
 
+
   //
 
   background(0);
@@ -102,9 +100,9 @@ void keyPressed() {
 void draw() {
   if (!pause) {
     translate(width/2, height/2);
-    println(frameRate);
+    //println(frameRate);
     fill(255);
-    stroke(255, 255, 255, 120);
+    stroke(255, 255, 255, 80);
     strokeWeight(2);
 
     /*
@@ -120,7 +118,7 @@ void draw() {
      Can also adjust speed and smoothness by messing with VEL and da_t above
      */
 
-    int num_steps = 9400;
+    int num_steps = 5000;
 
     if (mode == 0) {
       background(0);
@@ -151,6 +149,12 @@ void draw() {
         a_t += da_t;
       }
       a_t = 0;
+
+      // Uncomment to save frames for a gif
+      //if (pos_t < FRAMES) {
+      //  saveFrame("/Frames/frame_###.tif");
+      //}
+
       pos_t++;
     } else if (mode == 1) {  // GEAR VIEW MODE
       background(0);
@@ -174,8 +178,8 @@ void draw() {
       fill(255, 255, 0);
       circle(pen_point.x, pen_point.y, 5);
 
-      a_t += da_t;
-      pos_t++;
+      a_t += da_t/2;
+      pos_t += 0.5;
     }
   }
 }  
