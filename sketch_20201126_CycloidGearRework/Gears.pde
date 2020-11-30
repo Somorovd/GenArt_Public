@@ -1,11 +1,3 @@
-/*
-  Im not reaslly familiar with java classes and abstract methods
- but I wanted the two gear types to be the "same" so that the 
- methods can all be called one after another in the 
- declaration. This works for me but maybe there are better ways.
- IDK.
- */
-
 abstract class Gear {
   abstract PVector getPosition(float a_t, float p_t);
   abstract float getAngle(float a_t);
