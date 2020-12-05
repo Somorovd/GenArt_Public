@@ -4,7 +4,7 @@ abstract class Gear {
   abstract Gear addGear();
   abstract int getTeeth();
   abstract int getDir();
-  abstract void show();
+  abstract void show(float p_t);
 }
 
 class AttachedGear extends Gear {
@@ -31,7 +31,8 @@ class AttachedGear extends Gear {
   PVector parent_pos;
   PVector current_pos;
   int teeth, dr_teeth;
-  float vel, d;
+  float vel;
+  OSC d;
   int dir = 1;  // direction of rotation. 
 
   AttachedGear(Gear _parent, int _dir) {
@@ -58,9 +59,10 @@ class AttachedGear extends Gear {
 
   // How far out this gear is from the center of the parent
   // gear as a percentage of parent gear radius
-  // Could potentially be turned into an OSC as well
-  AttachedGear setDistance(float _d) {
-    d = _d*SCL/BASETEETH * parent.getTeeth();
+  AttachedGear setDistance(float val, float amp, int frq, float phs) {
+    val *= float(parent.getTeeth())/BASETEETH;
+    amp *= float(parent.getTeeth())/BASETEETH;
+    d = new OSC(val, amp, frq, phs);
     return this;
   }
 
@@ -72,8 +74,8 @@ class AttachedGear extends Gear {
   PVector getPosition(float a_t, float p_t) {
     parent_pos = parent.getPosition(a_t, p_t);
     float a = parent.getAngle(a_t);
-    float x = parent_pos.x + d * cos(a);
-    float y = parent_pos.y + d * sin(a);
+    float x = parent_pos.x + d.getVal(p_t) * cos(a);
+    float y = parent_pos.y + d.getVal(p_t) * sin(a);
     current_pos = new PVector(x, y);
     return current_pos;
   }
@@ -95,26 +97,26 @@ class AttachedGear extends Gear {
     return new AttachedGear(this, dir);
   }
 
-  void show() {
+  void show(float p_t) {
     fill(255);
     noStroke();
     circle(current_pos.x, current_pos.y, 10);
     noFill();
     stroke(255, 255, 255, 100);
-    circle(parent_pos.x, parent_pos.y, 2*d);
-    parent.show();
+    circle(parent_pos.x, parent_pos.y, 2*d.getVal(p_t));
+    parent.show(p_t);
   }
 }
 
 class FreeGear extends Gear {
-  
+
   /*
     These gears serve as the base of the gear train.
-    Their position is independent of any other gear.
-    Mostly the same as attahced gear, except center
-    must be specified and setTeeth() instead of
-    setTeethRatio().
-  */
+   Their position is independent of any other gear.
+   Mostly the same as attahced gear, except center
+   must be specified and setTeeth() instead of
+   setTeethRatio().
+   */
 
   float vel;
   int teeth;
@@ -173,7 +175,7 @@ class FreeGear extends Gear {
     return new AttachedGear(this, dir);
   }
 
-  void show() {
+  void show(float p_t) {
     fill(0);
     stroke(255);
     circle(current_pos.x, current_pos.y, 10);

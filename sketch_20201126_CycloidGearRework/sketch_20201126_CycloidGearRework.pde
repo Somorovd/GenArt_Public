@@ -16,13 +16,13 @@ OSC PENDIST, PENOFF;
 // scale factor
 float SCL = 100;    
 
-// teeth on BASE gear
-// Used to properly scale gear size and angular velocity
+// teeth on BASE gear, the big central gear.
+// Used to properly scale gear size according to teeth
 int BASETEETH;   
 
 // Angular velocity of BASE gear
 // Scales angular velocity of other gears
-float VEL = PI;
+float VEL = PI/2;
 
 // current "angle time" and time increment
 // time used in turning the gears but not changing any positions
@@ -32,14 +32,14 @@ float da_t = 0.04;
 // "position time" (increments with framecount)
 // time used to calculate any oscillating values
 float pos_t = 0;
-// number of frames in a perfect loop
+
+// number of frames in a perfect loop (Press r to save frames)
 // Increase for slower animation
-int FRAMES = 300;
+int FRAMES = 250;
 
 // keeps track of pen point
 PVector prev_point;
 
-// switch from draw mode to "gear view" with SPACE
 int mode = 0;
 
 boolean pause = false;
@@ -51,42 +51,56 @@ void setup() {
   // base teeth options; 120, 144, 150
   // gear teeth options: 30, 32, 34, 36, 40, 48, 50, 58, 60, 66, 72, 74, 80, 90, 94, 98, 100
 
-  //
+  // See Examples Tab for more
 
-  SCL = 220;
-  BASETEETH = 150;
+  // Press SPACE after running to see a representation 
+  // of the gear system in action
+
+  SCL = 180;
+  BASETEETH = 120;
+  
+  // Probably dont change the base gear
   BASE = new FreeGear()
-    .setCenterX(0, 0, 0, 0)
+    .setCenterX(0, 0, 0, 0) 
     .setCenterY(0, 0, 0, 0)
     .setTeeth(BASETEETH)
-    .setDir(-1)
-    ;
-
-  fulcrumGear = new FreeGear()
-    .setCenterX(-1.2, 0, 0, 0)
-    .setCenterY(-1.2, 0, 0, 0)
-    .setTeeth(94)
     .setDir(1)
     ;
 
-  pivotGear = new FreeGear()
-    .setCenterX(1.75, 0, 0, 0)
-    .setCenterY(-0.2, 0, 0, 0)
+  fulcrumGear = new FreeGear()
+    .setCenterX(-0.8, 0.7, 2, PI/2)
+    .setCenterY(-0.8, 0.2, 3, 0)
     .setTeeth(60)
-    .setDir(-1)
+    .setDir(1)
+    .addGear()
+    .setTeethRatio(40, 60)
+    .setDistance(0.3, 0.3, 4, 0)
+
     ;
 
-  PIVOT = new Pin(pivotGear, 0.8);
-  FULCRUM = new Pin(fulcrumGear, 0.8);
-  PENDIST = new OSC(1.5, 0.5, 1, 0);
-  PENOFF = new OSC(0.6, 0.5, 2, 0);
+  pivotGear = new FreeGear()
+    .setCenterX(1.4, 0, 0, 0)
+    .setCenterY(0, 0.7, 2, 0)
+    .setTeeth(90)
+    .setDir(-1)
+    .addGear()
+    .setTeethRatio(30, 34)
+    .setDistance(0.4, 0.4, 2, PI/4)
+    ;
 
+  PIVOT = new Pin(pivotGear, 0.1, 0.1, 2, PI);
+  FULCRUM = new Pin(fulcrumGear, 0.6, 0.5, 4, PI/2);
+  PENDIST = new OSC(1.4, 0.5, 1, 0);
+  PENOFF = new OSC(0.2, 0.4, 3, 0);
 
-  //
+  
 
   background(0);
   strokeCap(SQUARE);
 }
+
+boolean record = false;
+float rstart = 0;
 
 void keyPressed() {
   if (key == ' ') {
@@ -95,6 +109,10 @@ void keyPressed() {
   if (key == 'p' || key == 'P') {
     pause = !pause;
   }
+  if (key == 'r') { 
+    record = true;
+    rstart = pos_t;
+  }
 }
 
 void draw() {
@@ -102,7 +120,7 @@ void draw() {
     translate(width/2, height/2);
     //println(frameRate);
     fill(255);
-    stroke(255, 255, 255, 80);
+    stroke(255, 255, 255, 100);
     strokeWeight(2);
 
     /*
@@ -126,7 +144,9 @@ void draw() {
      will reduce performance.
      */
 
-    int num_steps = 4800;
+    // Depending on the setup you might need more steps to complete the curve
+    // if it is looking a little sparse try more step, or larger step sizes
+    int num_steps = 6000; 
 
     if (mode == 0) {
       background(0);
@@ -159,6 +179,19 @@ void draw() {
 
       a_t = 0;
       pos_t++;
+
+      if (record && ((pos_t-rstart) <= FRAMES)) {
+        saveFrame("/Frames/frame_###.tif");
+        
+        /*
+        Tutorial on turning frames into .MOV file
+        https://www.youtube.com/watch?v=G2hI9XL6oyk        
+        
+        Then usually convert to a GIF using
+        https://www.onlineconverter.com/mov-to-gif
+        */
+        
+      }
     } else if (mode == 1) {  // GEAR VIEW MODE
       /*
       gear view helps to visualize the setup and keep the 
@@ -181,8 +214,8 @@ void draw() {
       noFill();
       circle(0, 0, 2*SCL);
 
-      PIVOT.show();
-      FULCRUM.show();
+      PIVOT.show(pos_t);
+      FULCRUM.show(pos_t);
 
       fill(255, 0, 0);
       circle(0, 0, 10);

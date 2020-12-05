@@ -16,8 +16,8 @@ class OSC {
   float val, amp, vel, phs;
 
   OSC(float _val, float _amp, int _frq, float _phs) {
-    val = _val * SCL;
-    amp = _amp * SCL;
+    val = _val*SCL;
+    amp = _amp*SCL;
     vel = 2*PI*_frq/FRAMES;
     phs = _phs;
   }
