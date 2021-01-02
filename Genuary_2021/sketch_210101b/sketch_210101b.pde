@@ -1,9 +1,9 @@
 /*
 
-For GENUARY 2021 : Day 1
-Prompt : Triple Nested Loop
-
-*/
+ For GENUARY 2021 : Day 1
+ Prompt : Triple Nested Loop
+ 
+ */
 
 void setup() {
   size(1200, 800);
@@ -31,8 +31,20 @@ void draw() {
   noLoop();
   background(255);
 
-  Rect[] rects1 = generateRects();
-  Rect[] rects2 = generateRects();
+  int n1 = 5; // number of rects in level 1
+  int g1 = 20; // gap between rects in level 1
+
+  int n2 = 7; // number of rects in level 2 (for each rect in level 1)
+  int g2 = 10;
+
+  int n3 = 3;
+  int g3 = 10;
+  
+  int b = 50; // Border from the edge of the window
+
+
+  Rect[] rects1 = generateRects(n1, n2, n3, g1, g2, g3, b);
+  Rect[] rects2 = generateRects(n1, n2, n3, g1, g2, g3, b);
 
   PGraphics pg = createGraphics(width, height);
 
@@ -56,8 +68,8 @@ void draw() {
         float y = r.y + j;
         int idx = int(y)*width + int(x);
 
-        float min = 0.2;
-        float  max = 0.95;
+        float min = 0.1;
+        float  max = 0.9;
         float pct = map(red(pg.pixels[idx]), 0, 255, min, max);
         pixels[idx] = (random(1) < pct) ? color(0) : color(255);
       }
