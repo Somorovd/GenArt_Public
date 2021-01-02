@@ -31,23 +31,6 @@ void draw() {
   noLoop();
   background(255);
 
-  color[] palette = {
-    color(114, 158, 161), 
-    color(181, 189, 137), 
-    color(223, 190, 153), 
-    color(236, 145, 146), 
-    color(219, 83, 117), 
-  };
-
-  //if (k == idx) {
-  //  fill(255, 255, 255, 100);
-  //  stroke(c);
-  //  strokeWeight(2);
-  //} else {
-  //  fill(color(red(c), green(c), blue(c), 100));
-  //  stroke(0);
-  //  strokeWeight(1);
-
   Rect[] rects1 = generateRects();
   Rect[] rects2 = generateRects();
 
