@@ -13,7 +13,7 @@ Based on: http://rainbowsmoke.hu/tech
 
 
 PImage img;           // Reference image to extract colors from (should be placed in Data folder)
-int g = 250;          // grid size (start small this takes some time)
+int g = 200;          // grid size (start small this takes some time)
 
 // MAIN PARAMETERS
 int col_dist = 1;     // distance over which avg color is calculates
@@ -40,7 +40,7 @@ ForceNode[] nodes = new ForceNode[num_nodes];
 
 void setup() {
   size(1000, 1000);
-  img = loadImage("img1.jpg");
+  img = loadImage("img2.jpg");
   img.loadPixels();
   INIT();
 }
@@ -86,13 +86,13 @@ void INIT() {
   for (int i=0; i<num_seeds; i++) {
     
     //// Random seed positions
-    //int rand_idx = (int) random(g*g);
-    //Cell seed_cell = cells[rand_idx];
+    int rand_idx = (int) random(g*g);
+    Cell seed_cell = cells[rand_idx];
     
-    // Looks better when seeds are centered on the nodes (assuming there are enough nodes)
+    // Looks better when seeds are centered on the nodes (assuming num_nodes >= num_seeds)
     // (should probably make the weight function look backwards too not just forward)
-    ForceNode node = nodes[i];
-    Cell seed_cell = cells[(int)(node.pos.y/s)*g + (int)(node.pos.x/s)];
+    //ForceNode node = nodes[i];
+    //Cell seed_cell = cells[(int)(node.pos.y/s)*g + (int)(node.pos.x/s)];
 
     if (seed_cell.filled) {  // dont pick same twice
       continue;
@@ -173,6 +173,7 @@ void draw() {
 
     // The break conditions shouldnt ever happen, but the Octtree code must have some bugs still
     // that I havent fixed yet
+    // If it does fail, it will stop and you will see magenta filled cells
     Octtree avg_ot = colors.getSubOT(avg);
     if (avg_ot == null) {
       println("Cant get SubOT");
