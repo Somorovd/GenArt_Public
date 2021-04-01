@@ -17,7 +17,7 @@ int g = 250;          // grid size (start small this takes some time)
 
 // MAIN PARAMETERS
 int col_dist = 1;     // distance over which avg color is calculates
-int add_dist = 1;     // distance for new cells to get added to fillable_cells
+int add_dist = 1;     // distance for new cells to get added to fillable_cells (must be <= col_dist)
 int num_seeds = 1;    // initial cells filled before algorithm start
 int num_nodes = 1;    // forceNodes created for to make flow field
 
