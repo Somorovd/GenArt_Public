@@ -17,8 +17,8 @@ class Cell {
     h = _h;
   }
 
-  void setDir() {
-    dir = getNetForce(new PVector(x, y)).normalize();
+  void setDir() {   // Sample the flow field here
+    dir = getNetForce(new PVector(x, y)).normalize();  
   }
 
   // Get indicies of neighboring cells within distance n
