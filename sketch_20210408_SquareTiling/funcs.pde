@@ -12,14 +12,6 @@ class Cell {
   }
 }
 
-ArrayList<Integer> arrCopy(ArrayList<Integer> arr){
-    ArrayList new_arr = new ArrayList();
-    for (int i : arr){
-      new_arr.add(i);
-    }
-    return new_arr;
-}
-
 ArrayList<Integer> arrShuffle(ArrayList<Integer> arr){
   ArrayList<Integer> new_arr = new ArrayList<Integer>();
   ArrayList<Integer> indicies = new ArrayList<Integer>();
