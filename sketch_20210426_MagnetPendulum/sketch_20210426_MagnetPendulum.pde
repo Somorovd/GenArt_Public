@@ -88,6 +88,9 @@ void draw() {
         Taking dot products to find the component of each force in theta and phi directions
          here alpha is angle between the force vector and theta direction
          beta is angle between the force vector and phi direciton
+         
+        ((theta+e)/abs(theta+e)) is trying to correct for when the pendulum is on the opposite of 0 from the magnet
+        idk. it wasnt working without it. I think something to do with dot product
          */
 
         PVector force_grav_dir = new PVector(0, 0, -1);
