@@ -1,5 +1,7 @@
 // Based on: https://www.youtube.com/watch?v=C5Jkgvw-Z6E
 // THIS WILL TAKE A FEW MINUTES TO RUN
+// 
+// GLSL Implementation: https://www.shadertoy.com/view/NdBSRR
 
 float theta, v_theta, a_theta;  // theta is the angle of the pendulum from vertical
 float phi, v_phi, a_phi;        // phi is the angle of rotation of the pendulum
